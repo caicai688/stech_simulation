@@ -16,7 +16,7 @@ export const JUDGES: { [key: string]: Omit<JudgeComment, 'content'> & { descript
   },
   sarah: {
     judgeId: 'sarah',
-    name: 'Sarah (冷脸导师)',
+    name: '冷脸导师豆豆',
     avatar: '',
     description: '刻薄专业，隐性冷幽默',
   },
@@ -133,7 +133,7 @@ You MUST return a valid JSON object. Do NOT wrap it in markdown code blocks. The
     },
     {
       "judgeId": "sarah",
-      "name": "Sarah",
+      "name": "冷脸导师豆豆",
       "reaction": "Action description (e.g. 推了推眼镜) in Chinese",
       "content": "Critique string in Chinese... (Include hidden joke if score > 90)"
     },

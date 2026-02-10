@@ -54,7 +54,7 @@ const StageBackground: React.FC = () => {
             <div className="absolute bottom-2 right-2 w-2 h-2 rounded-full bg-[#654321] shadow-inner" />
             
             <div className="text-lg md:text-3xl font-black font-comic text-[#4a0e0e] drop-shadow-[0_1px_0_rgba(255,255,255,0.3)] tracking-widest whitespace-nowrap">
-              笑话鉴赏大赛
+              段子鉴赏大赛
             </div>
          </div>
       </div>
