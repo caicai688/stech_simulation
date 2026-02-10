@@ -34,7 +34,7 @@ const HistoryDrawer: React.FC<HistoryDrawerProps> = ({ isOpen, onClose, history,
               className="p-3 mb-2 rounded-lg bg-gray-700/50 hover:bg-gray-700 cursor-pointer border border-transparent hover:border-gray-600 transition-all group shadow-sm"
             >
               <div className="flex justify-between items-center mb-1">
-                 <span className={`text-xs font-bold px-1.5 py-0.5 rounded ${item.result.grade === 'S' ? 'bg-yellow-500/20 text-yellow-400' : 'bg-gray-600 text-gray-300'}`}>
+                 <span className={`text-xs font-bold px-1.5 py-0.5 rounded ${item.result.grade === '夯' ? 'bg-yellow-500/20 text-yellow-400' : 'bg-gray-600 text-gray-300'}`}>
                    评级 {item.result.grade}
                  </span>
                  <span className="text-[10px] text-gray-400">

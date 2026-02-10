@@ -17,7 +17,7 @@ export interface JudgeComment {
 
 export interface EvaluationResult {
   totalScore: number; // 0-100
-  grade: 'S' | 'A' | 'B' | 'C' | 'F';
+  grade: '夯' | '顶级' | '人上人' | 'NPC' | '拉完了';
   vibeMatch: string; // Description of vibe match
   vibes: VibeScores;
   comments: JudgeComment[];

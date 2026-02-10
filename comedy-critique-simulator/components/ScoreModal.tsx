@@ -24,10 +24,11 @@ const ScoreModal: React.FC<ScoreModalProps> = ({ result, isOpen, onClose, onRepl
 
   const getGradeColor = (grade: string) => {
     switch (grade) {
-      case 'S': return 'text-yellow-400 drop-shadow-[0_0_10px_rgba(250,204,21,0.8)]';
-      case 'A': return 'text-purple-400';
-      case 'B': return 'text-blue-400';
-      case 'F': return 'text-red-500';
+      case '夯': return 'text-yellow-400 drop-shadow-[0_0_10px_rgba(250,204,21,0.8)]';
+      case '顶级': return 'text-purple-400';
+      case '人上人': return 'text-blue-400';
+      case 'NPC': return 'text-orange-400';
+      case '拉完了': return 'text-red-500';
       default: return 'text-gray-400';
     }
   };

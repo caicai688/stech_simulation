@@ -116,7 +116,7 @@ Evaluate the user's joke (text and/or image) in **CHINESE**.
 You MUST return a valid JSON object. Do NOT wrap it in markdown code blocks. The JSON structure is:
 {
   "totalScore": number (0-100),
-  "grade": "S", "A", "B", "C", or "F",
+  "grade": "夯" (90-100), "顶级" (80-89), "人上人" (60-79), "NPC" (40-59), or "拉完了" (0-39),
   "vibeMatch": "Short description of text vs vibe (in Chinese)",
   "vibes": {
     "chaos": number (0-100),
