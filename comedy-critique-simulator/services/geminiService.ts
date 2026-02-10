@@ -11,8 +11,19 @@ export const evaluateJoke = async (
   
   const provider = config.provider || 'gemini';
   
-  // For Gemini, we might fallback to env var. For others, user must provide key.
-  const apiKey = config.apiKey || (provider === 'gemini' ? process.env.API_KEY : '');
+  // Try to get API key from multiple sources:
+  // 1. User-provided config
+  // 2. Environment variable (build-time injected)
+  // 3. Import meta env (Vite standard)
+  let apiKey = config.apiKey;
+  
+  if (!apiKey && provider === 'gemini') {
+    // @ts-ignore - process.env.API_KEY is injected by Vite at build time
+    apiKey = (typeof process !== 'undefined' && process.env?.API_KEY) || 
+             // @ts-ignore - Vite env
+             (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GEMINI_API_KEY) || 
+             '';
+  }
   
   if (!apiKey) {
     throw new Error(`未配置 ${PROVIDERS[provider].name} 的 API Key。请在右上角设置中输入。`);
