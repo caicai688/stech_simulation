@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>段子鉴赏大赛</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Zcool+KuaiLe&display=swap');
+      
+      body {
+        font-family: 'Noto Sans SC', sans-serif;
+        background-color: #1a1a1a;
+        color: #e5e5e5;
+        overflow: hidden; /* Prevent body scroll, handle in app */
+      }
+      
+      .font-comic {
+        font-family: 'Zcool KuaiLe', cursive;
+      }
+      
+      /* Custom scrollbar */
+      
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      
+      ::-webkit-scrollbar-track {
+        background: #2d2d2d; 
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: #555; 
+        border-radius: 4px;
+      }
+      
+      ::-webkit-scrollbar-thumb:hover {
+        background: #777; 
+      }
+      
+      /* Danmaku Animation */
+      
+      @keyframes floatLeft {
+        from { transform: translateX(100vw); }
+        to { transform: translateX(-180vw); } /* Increased negative value to ensure full exit for long text */
+      }
+      
+      .danmaku-item {
+        position: absolute;
+        white-space: nowrap;
+        animation-name: floatLeft;
+        animation-timing-function: linear;
+        pointer-events: none;
+        text-shadow: 1px 1px 2px black;
+        font-weight: bold;
+        left: 0; /* Reference point */
+        top: 0;
+        /* Critical fix: 'both' ensures the element sits at 'from' (off-screen right) during the animation-delay */
+        animation-fill-mode: both; 
+        will-change: transform; /* Performance optimization */
+      }
+      
+      .animate-bounce-slow {
+        animation: bounce 3s infinite;
+      }
+    </style>
+
+<link rel="stylesheet" href="/index.css">
+  <script type="importmap">
+{
+  "imports": {
+    "recharts": "https://esm.sh/recharts@^3.7.0",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.39.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "pixi.js": "https://esm.sh/pixi.js@^8.6.6"
+  }
+}
+</script>
+  <script type="module" crossorigin src="/comedy/assets/index-09pIUgFW.js"></script>
+</head>
+  <body>
+    <div id="root"></div>
+</body>
+</html>
