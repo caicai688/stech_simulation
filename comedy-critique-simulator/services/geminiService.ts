@@ -11,18 +11,22 @@ export const evaluateJoke = async (
   
   const provider = config.provider || 'gemini';
   
-  // Try to get API key from multiple sources:
-  // 1. User-provided config
-  // 2. Environment variable (build-time injected)
-  // 3. Import meta env (Vite standard)
-  let apiKey = config.apiKey;
+  // Try to get API key from multiple sources (in priority order):
+  // 1. Environment variable (Vite standard: VITE_GEMINI_API_KEY)
+  // 2. Environment variable (legacy: GEMINI_API_KEY) 
+  // 3. User-provided config (from UI settings)
+  let apiKey = '';
   
-  if (!apiKey && provider === 'gemini') {
-    // @ts-ignore - process.env.API_KEY is injected by Vite at build time
-    apiKey = (typeof process !== 'undefined' && process.env?.API_KEY) || 
-             // @ts-ignore - Vite env
-             (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GEMINI_API_KEY) || 
+  if (provider === 'gemini') {
+    // @ts-ignore - Vite env variables
+    apiKey = (typeof import.meta !== 'undefined' && 
+              (import.meta.env?.VITE_GEMINI_API_KEY || 
+               import.meta.env?.GEMINI_API_KEY)) || 
+             config.apiKey || 
              '';
+  } else {
+    // For non-gemini providers, use config first
+    apiKey = config.apiKey || '';
   }
   
   if (!apiKey) {
