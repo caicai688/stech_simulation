@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { X, Settings as SettingsIcon, Key, Cpu, Server } from 'lucide-react';
+import { X, Settings as SettingsIcon, Cpu } from 'lucide-react';
 import { AppConfig, AIProvider } from '../types';
 import { PROVIDERS } from '../constants';
 
@@ -13,14 +13,12 @@ interface SettingsProps {
 
 const Settings: React.FC<SettingsProps> = ({ config, onSave, isOpen, onClose }) => {
   const [provider, setProvider] = useState<AIProvider>(config.provider || 'gemini');
-  const [apiKey, setApiKey] = useState(config.apiKey || '');
   const [model, setModel] = useState(config.model);
 
   // Sync with props when opened
   useEffect(() => {
     if (isOpen) {
         setProvider(config.provider || 'gemini');
-        setApiKey(config.apiKey || '');
         setModel(config.model);
     }
   }, [config, isOpen]);
@@ -28,10 +26,6 @@ const Settings: React.FC<SettingsProps> = ({ config, onSave, isOpen, onClose }) 
   // When provider changes, reset model to the first available one for that provider
   const handleProviderChange = (newProvider: AIProvider) => {
       setProvider(newProvider);
-      // If switching back to Gemini, we might want to clear the manual key if it was a user key for another provider?
-      // For now, let's keep the key field simply as the "current active key"
-      setApiKey(''); // Clear key for safety when switching providers
-      
       const defaultModel = PROVIDERS[newProvider].models[0].id;
       setModel(defaultModel);
   };
@@ -39,7 +33,7 @@ const Settings: React.FC<SettingsProps> = ({ config, onSave, isOpen, onClose }) 
   if (!isOpen) return null;
 
   const handleSave = () => {
-    onSave({ provider, apiKey, model });
+    onSave({ provider, apiKey: '', model }); // apiKey 留空，由后端使用内置 Key
     onClose();
   };
 
@@ -51,7 +45,7 @@ const Settings: React.FC<SettingsProps> = ({ config, onSave, isOpen, onClose }) 
         <div className="p-4 border-b border-gray-700 flex justify-between items-center bg-gray-900 shrink-0">
           <h2 className="text-lg font-bold text-white flex items-center gap-2">
             <SettingsIcon size={20} className="text-yellow-500" /> 
-            系统设置 (Settings)
+            选择模型 (Model Selection)
           </h2>
           <button onClick={onClose} className="text-gray-400 hover:text-white">
             <X size={24} />
@@ -63,47 +57,27 @@ const Settings: React.FC<SettingsProps> = ({ config, onSave, isOpen, onClose }) 
           {/* Provider Selection */}
           <div className="space-y-2">
             <label className="text-sm font-bold text-gray-300 flex items-center gap-2">
-              <Server size={16} className="text-purple-400" /> 模型厂商 (Provider)
+              <Cpu size={16} className="text-purple-400" /> 模型厂商 (Provider)
             </label>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                {(Object.keys(PROVIDERS) as AIProvider[]).map((key) => (
+            <div className="grid grid-cols-1 gap-2">
+                {(['gemini', 'glm', 'qwen'] as AIProvider[]).map((key) => (
                     <button
                         key={key}
                         onClick={() => handleProviderChange(key)}
-                        className={`px-2 py-2 rounded-lg text-xs md:text-sm border transition-all truncate ${
+                        className={`px-4 py-3 rounded-lg text-sm border transition-all flex justify-between items-center ${
                             provider === key 
                             ? 'bg-yellow-600/20 border-yellow-500 text-yellow-400' 
-                            : 'bg-gray-700 border-gray-600 text-gray-400 hover:bg-gray-600'
+                            : 'bg-gray-700 border-gray-600 text-gray-300 hover:bg-gray-600'
                         }`}
                     >
-                        {PROVIDERS[key].name}
+                        <span className="font-bold">{PROVIDERS[key].name}</span>
+                        {provider === key && <div className="w-2 h-2 rounded-full bg-yellow-500" />}
                     </button>
                 ))}
             </div>
-          </div>
-
-          {/* API Key */}
-          <div className="space-y-2">
-            <label className="text-sm font-bold text-gray-300 flex items-center gap-2">
-              <Key size={16} className="text-blue-400" /> API Key
-            </label>
-            <input 
-              type="password"
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              placeholder={`输入 ${currentProviderInfo.name} API Key`}
-              className="w-full bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-white focus:border-yellow-500 outline-none placeholder-gray-500 text-sm"
-            />
-            {provider === 'gemini' && (
-                <p className="text-xs text-gray-400">
-                  留空则使用环境变量中的默认 Key (Gemini Default)。
-                </p>
-            )}
-            {provider !== 'gemini' && (
-                <p className="text-xs text-yellow-500/80">
-                  注意：使用第三方模型必须提供您自己的 API Key。
-                </p>
-            )}
+            <p className="text-xs text-gray-400 mt-2">
+              💡 已内置 API Key，无需配置，直接选择即可使用
+            </p>
           </div>
 
           {/* Model Selection */}
@@ -111,7 +85,7 @@ const Settings: React.FC<SettingsProps> = ({ config, onSave, isOpen, onClose }) 
             <label className="text-sm font-bold text-gray-300 flex items-center gap-2">
               <Cpu size={16} className="text-green-400" /> 选择模型 (Model)
             </label>
-            <div className="grid grid-cols-1 gap-2">
+            <div className="grid grid-cols-1 gap-2 max-h-[300px] overflow-y-auto custom-scrollbar">
                {currentProviderInfo.models.map((m) => (
                    <button 
                      key={m.id}

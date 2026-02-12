@@ -26,12 +26,23 @@ export interface EvaluationResult {
   overallComment: string;
 }
 
+// 玩家反馈类型
+export type FeedbackType = 'rose' | 'egg' | null;
+
+// 按导师分别的反馈
+export interface JudgeFeedback {
+  judgeId: 'veteran' | 'zoomer' | 'sarah';
+  type: FeedbackType;
+  timestamp: number;
+}
+
 export interface HistoryItem {
   id: string;
   timestamp: number;
   input: string; // The joke text
   image?: string; // Base64 of uploaded meme
   result: EvaluationResult;
+  feedbacks?: JudgeFeedback[]; // 按导师分别的反馈（复数）
 }
 
 export type JokeCategory = 'brainTeaser' | 'classic' | 'cold' | 'pun' | 'selfDeprecation' | 'meme';

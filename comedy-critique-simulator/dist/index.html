@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>段子鉴赏大赛</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -13,6 +13,8 @@
         background-color: #1a1a1a;
         color: #e5e5e5;
         overflow: hidden; /* Prevent body scroll, handle in app */
+        /* iOS 安全区域适配 */
+        padding-top: env(safe-area-inset-top);
       }
       
       .font-comic {
@@ -63,6 +65,32 @@
       .animate-bounce-slow {
         animation: bounce 3s infinite;
       }
+      
+      /* Modal Animations */
+      
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      
+      @keyframes scaleIn {
+        from { 
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to { 
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      
+      .animate-fade-in {
+        animation: fadeIn 0.2s ease-out;
+      }
+      
+      .animate-scale-in {
+        animation: scaleIn 0.3s ease-out;
+      }
     </style>
 
 <link rel="stylesheet" href="/index.css">
@@ -79,7 +107,7 @@
   }
 }
 </script>
-  <script type="module" crossorigin src="/comedy/assets/index-Ta2Kg5m8.js"></script>
+  <script type="module" crossorigin src="/comedy/assets/index-CmeX235s.js"></script>
 </head>
   <body>
     <div id="root"></div>
